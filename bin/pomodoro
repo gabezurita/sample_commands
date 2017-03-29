@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#/ usage: pomodoro MINUTES
+
+source "common.bash"
+
+if [[ $# == 0 || $1 == "--help" ]]; then
+  print_help
+  exit 2
+fi
+
+minutes=$1
+seconds=$((60 * $minutes))
+
+while true; do
+  timestamp=`date '+%H:%M:%S'`
+  info "[$timestamp] $minutes minutes"
+  for i in $(seq 1 $seconds); do
+    printf "$i "
+    sleep 1
+  done
+  terminal-notifier -message "It's been $minutes minutes." -title 'Take a break!' -timeout 120 > /dev/null
+done

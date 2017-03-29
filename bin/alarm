@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+source "system_volume_helpers.bash"
+source "itunes_helpers.bash"
+
+## Music
+
+unmute_system
+set_system_volume 50
+set_itunes_volume 70
+play_playlist "Alarm"
+sleep 120
+
+## Voice
+
+set_system_volume 70
+while true; do
+  message='Michael, wake up!'
+  time=$(date '+%H:%M')
+  time_message="It's ${time}"
+
+  say -r 250 $message
+  sleep 1
+  say $time_message
+  sleep 1
+  say $time_message
+
+  sleep 60
+done
